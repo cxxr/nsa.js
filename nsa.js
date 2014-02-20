@@ -1,4 +1,3 @@
-
 function makeFancy(num) {
     if (!+num)
         return false;
