@@ -13,45 +13,40 @@
         </style>
     </head>
     <body>
-        <script>
-$(function(){
-    var prefixes;
-    var suffixes;
-    var prefix_done = false;
-    var suffix_done = false;
-    $.get('prefixes.txt', function(data) {
-        prefixes = data.split('\n');
-        prefix_done = true;
-    });
-    $.get('suffixes.txt', function(data) {
-        suffixes = data.split('\n');
-        suffix_done = true;
-    });
-
-    window.setInterval(function() {
-        if (prefix_done && suffix_done) {
-            var nsa = new NSA(prefixes, suffixes);
-            $("h1").text(nsa.getCodeName());
-            $("h2").hover(
-                function() {
-                    $(this).css('cursor', 'pointer');
-                },
-                function() {
-                        $(this).css('cursor', 'default');
-                }); 
-            $("h2").click(function() {
-                $("h1").text(nsa.getCodeName());
-            });
-            prefix_done = false;
-            suffix_done = false;
-        }
-    }, 800);
-});
-        </script>
-
         <h1 class="align">LOADING...</h1>
         <h2 class="align">Get another!<h2>
         <p>NSA Code Word Generator made by <a href="https://twitter.com/ex509">Sean</a>. Check this out on <a href="https://github.com/cxxr/nsa.js">GitHub</p>
+
+        <script>
+        // Don't leak into global scope.
+        (function() {
+
+          // Store both requests as jqXHR promises.
+          var prefix = $.get('prefixes.txt');
+          var suffix = $.get('suffixes.txt');
+
+          // Wait until both promises have resolved.
+          $.when(prefix, suffix).then(function(prefix, suffix) {
+            var prefixes = prefix.split('\n');
+            var suffixes = suffix.split('\n');
+
+            // Inject into NSA.
+            var nsa = new NSA(prefixes, suffixes);
+
+            $("h1").text(nsa.getCodeName());
+            $("h2").hover(function() {
+              $(this).css('cursor', 'pointer');
+            }, function() {
+              $(this).css('cursor', 'default');
+            }); 
+
+            $("h2").click(function() {
+              $("h1").text(nsa.getCodeName());
+            });
+          });
+
+        })();
+        </script>
     </body>
 </html>
 
