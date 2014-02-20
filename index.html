@@ -27,8 +27,8 @@
 
           // Wait until both promises have resolved.
           $.when(prefix, suffix).then(function(prefix, suffix) {
-            var prefixes = prefix.split('\n');
-            var suffixes = suffix.split('\n');
+            var prefixes = prefix[0].split('\n');
+            var suffixes = suffix[0].split('\n');
 
             // Inject into NSA.
             var nsa = new NSA(prefixes, suffixes);
