@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NSA Code Word Generator</title>
+        <link href='http://fonts.googleapis.com/css?family=Archivo+Black' rel='stylesheet' type='text/css'>
+        <script src="nsa.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <style type="text/css">
+            .align {height:100px; line-height:100px; text-align:center;}
+            h1 { font-size: 500%; font-family: 'Archivo Black', sans-serif; }
+            h2 { font-size: 300%; font-family: sans-serif;}
+        </style>
+    </head>
+    <body>
+        <script>
+$(function(){
+    var prefixes = ["monkey", "swap", "angry", "cult", "cotton"];
+    var suffixes = ["mouse", "beam", "octave", "thunder", "calendar"];
+    var nsa = new NSA(prefixes, suffixes);
+    $("h1").text(nsa.getCodeName());
+    $("h2").hover(
+        function() {
+            $(this).css('cursor', 'pointer');
+        },
+        function() {
+                $(this).css('cursor', 'default');
+        }); 
+    $("h2").click(function() {
+        $("h1").text(nsa.getCodeName());
+    });
+});
+        </script>
+
+        <h1 class="align"></h1>
+        <h2 class="align">Get another!<h2>
+    </body>
+</html>
+
