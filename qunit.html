@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>gotta test nsa.js</title>
+<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+<script src="nsa.js"></script>
+<script>
+test( "basic test", function() {
+    var nsa = new NSA(["monkey"], ["calendar"]);
+    code_name = nsa.getBasicCodeName();
+    equal( code_name, "MONKEYCALENDAR", "Uppercase and one word" );
+});
+test( "fancy test", function() {
+    var nsa = new NSA(["monkey"], ["calendar"]);
+    nsa.singleFlip = 0;
+    nsa.maxFancy = 0;
+    code_name = nsa.getFancyCodeName();
+    equal( code_name, "MONKEY-II", "Uppercase and roman numeral" );
+
+    nsa.singleFlip = 1;
+    code_name = nsa.getFancyCodeName();
+    equal( code_name, "CALENDAR-II", "Uppercase and roman numeral" );
+});
+test( "fancy test", function() {
+    var nsa = new NSA(["monkey"], ["calendar"]);
+    nsa.basicFlip = 0;
+    code_name = nsa.getCodeName();
+    equal( code_name, "MONKEYCALENDAR", "Uppercase and one word" );
+
+    nsa.basicFlip = 1;
+    nsa.romanFlip = 0;
+    nsa.singleFlip = 0;
+    nsa.maxFancy = 0;
+    code_name = nsa.getCodeName();
+    equal( code_name, "MONKEY-II", "Uppercase and roman numeral" );
+
+    nsa.romanFlip = 1;
+    code_name = nsa.getCodeName();
+    equal( code_name, "MONKEY", "Uppercase only" );
+});
+</script>
+</body>
+</html>
